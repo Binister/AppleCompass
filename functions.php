@@ -34,7 +34,7 @@ $countries = [
 	],[
 		"country" => "China",
 		"abbr" => "cn",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
@@ -70,13 +70,13 @@ $countries = [
 	],[
 		"country" => "Hong Kong",
 		"abbr" => "hk",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
 		"country" => "Hungary",
 		"abbr" => "hu",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
@@ -94,7 +94,7 @@ $countries = [
 	],[
 		"country" => "Japan",
 		"abbr" => "jp",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
@@ -166,7 +166,7 @@ $countries = [
 	],[
 		"country" => "South Korea",
 		"abbr" => "kr",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
@@ -190,7 +190,7 @@ $countries = [
 	],[
 		"country" => "Taiwan",
 		"abbr" => "tw",
-		"decimals" => TRUE,
+		"decimals" => FALSE,
 		"tax_included" => TRUE,
 		"tax_percentage" => 100
 	],[
@@ -226,8 +226,69 @@ $countries = [
 	],
 ];
 
+function remove_non_numeric($input_string) {
+	$input_string = preg_replace('/\D/', '', $input_string);
+	return $input_string;
+}
 
-include('macbook.php');
+//echo remove_non_numeric('1213ab232b2rn3i').'<br>';
+
+function add_decimal($input_string) {
+	$input_string = substr_replace($input_string, '.', -2, 0);
+	return $input_string;
+}
+
+//echo add_decimal('1234353653').'<br>';
+
+function to_float($input_string) {
+	$input_string = (float) $input_string;
+	return $input_string;
+}
+
+//echo to_float('22242422').'<br>';
+
+function get_prices($extension, $location, $abbr, $decimals, $model, $key) {
+	$url = 'http://www.apple.com/'.$abbr.$extension;
+	$ch =  curl_init($url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+	$data = curl_exec($ch);
+
+	$DOM = new DOMDocument();
+	$DOM->loadHTML($data);
+	$finder = new DomXPath($DOM);
+	$nodes = $finder->query("//span[@itemprop='price']");
+	$price = $nodes->item($key)->textContent;
+	$price = remove_non_numeric($price);
+	if ($decimals == TRUE) {
+		$price = add_decimal($price);
+	}
+	$price = to_float($price);
+
+
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "root";
+	$dbname = "apple_products";
+
+	// Create connection
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	// Check connection
+	if (!$conn) {
+	    die("Connection failed: " . mysqli_connect_error());
+	}
+
+
+	$sql = "UPDATE price_list SET $model=$price WHERE country='$location'";
+	if (mysqli_query($conn, $sql)) {
+	    echo "Record updated successfully with ".$price.'<br>';
+	} else {
+	    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
+
+	mysqli_close($conn);
+
+}
 
 
 ?>

@@ -3,17 +3,17 @@
 
 include('functions.php');
 
-$extension = '/shop/buy-mac/macbook';
+$extension = '/shop/buy-mac/mac-pro';
 
 $products = [
 	[
-		"name" => "macbook_base",
+		"name" => "mac_pro_base",
 		"price_key" => 0
 	],
 	[
-		"name" => "macbook_max",
-		"price_key" => 3
-	],
+		"name" => "mac_pro_max",
+		"price_key" => 1
+	]
 ];
 
 foreach($countries as $country) {

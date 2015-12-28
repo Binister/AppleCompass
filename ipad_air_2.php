@@ -3,17 +3,33 @@
 
 include('functions.php');
 
-$extension = '/shop/buy-mac/macbook';
+$extension = '/shop/buy-ipad/ipad-air-2';
 
 $products = [
 	[
-		"name" => "macbook_base",
+		"name" => "ipad_air_2_16",
 		"price_key" => 0
 	],
 	[
-		"name" => "macbook_max",
-		"price_key" => 3
+		"name" => "ipad_air_2_64",
+		"price_key" => 1
 	],
+	[
+		"name" => "ipad_air_2_128",
+		"price_key" => 2
+	],
+	[
+		"name" => "ipad_air_2_16_cell",
+		"price_key" => 9
+	],
+	[
+		"name" => "ipad_air_2_64_cell",
+		"price_key" => 10
+	],
+	[
+		"name" => "ipad_air_2_128_cell",
+		"price_key" => 11
+	]
 ];
 
 foreach($countries as $country) {
