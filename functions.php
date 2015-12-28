@@ -281,7 +281,7 @@ function get_prices($extension, $location, $abbr, $decimals, $model, $key) {
 
 	$sql = "UPDATE price_list SET $model=$price WHERE country='$location'";
 	if (mysqli_query($conn, $sql)) {
-	    echo "Record updated successfully with ".$price.'<br>';
+	    echo $model.": Record updated successfully with ".$price.'<br>';
 	} else {
 	    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 	}
