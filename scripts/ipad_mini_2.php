@@ -30,42 +30,4 @@ foreach($countries as $country) {
 	}
 }
 
-
-
-
-//Macbook Air
-
-//Macbook Pro
-
-//iMac6666666
-
-//Mac Pro
-
-//Mac Mini
-
-//iPad Pro
-
-//iPad Air 2
-
-//iPad Air
-
-//iPad Mini 4
-
-//iPad mini 2
-
-//iPhone 6s
-
-//iPhone 6
-
-//iPhone 5s
-
-//Apple Watch Sport
-
-//Apple Watch
-
-//Apple Watch Edition
-
-//Apple TV
-
-
 ?>
